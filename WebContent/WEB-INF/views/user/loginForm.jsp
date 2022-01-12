@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.javaex.vo.UserVo" %>
+<%
+	UserVo authUser = (UserVo)session.getAttribute("authUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,20 +18,28 @@
 
 		<div id="header" class="clearfix">
 			<h1>
-				<a href="">MySite</a>
+				<a href="/mysite/main">MySite</a>
 			</h1>
 
-			<!-- 
-			<ul>
-				<li>황일영 님 안녕하세요^^</li>
-				<li><a href="" class="btn_s">로그아웃</a></li>
-				<li><a href="" class="btn_s">회원정보수정</a></li>
-			</ul>
-			-->	
-			<ul>
-				<li><a href="" class="btn_s">로그인</a></li>
-				<li><a href="" class="btn_s">회원가입</a></li>
-			</ul>
+			<%
+				if(authUser != null){
+			%>
+					<ul>
+						<li> <%=authUser.getName()%>님 안녕하세요^^</li>
+						<li><a href="/mysite/user?action=logout" class="btn_s">로그아웃</a></li>
+						<li><a href="/mysite/user?action=modifyForm" class="btn_s">회원정보수정</a></li>
+					</ul>
+			<%		
+				}
+				else{
+			%>
+					<ul>
+						<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
+						<li><a href="/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
+					</ul>
+			<%		
+				}
+			%>
 			
 		</div>
 		<!-- //header -->
@@ -70,25 +82,32 @@
 	
 				<div id="user">
 					<div id="loginForm">
-						<form action="" method="">
-	
+						<form action="/mysite/user" method="get">
+							<input type="hidden" name="action" value="login">
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<input type="text" id="input-uid" name="" value="" placeholder="아이디를 입력하세요">
+								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">비밀번호</label> 
-								<input type="text" id="input-pass" name="" value="" placeholder="비밀번호를 입력하세요"	>
+								<input type="text" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
-							
+							<%
+							if ("fail".equals(request.getParameter("result"))) {
+							%>
+								<p>사용자 정보가 일치하지 않습니다. 다시 로그인 해주세요</p>
+							<%
+							}
+							%>
 							<!-- 버튼영역 -->
 							<div class="button-area">
 								<button type="submit" id="btn-submit">로그인</button>
 							</div>
+
 							
 						</form>
 					</div>

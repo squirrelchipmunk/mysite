@@ -66,4 +66,95 @@ public class UserDao {
 		close();
 		return count;
 	}
+
+	public UserVo getUser(String id, String password) {
+		UserVo vo = null;
+		try {
+			getConnection();
+
+			String query ="";
+			query += " select no,  ";
+			query += " 		  name ";
+			query += " from users ";
+			query += " where id = ? and " ;
+			query += " 		 password = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, id );    
+			pstmt.setString(2, password);
+			
+			rs = pstmt.executeQuery();  
+			while(rs.next()) {
+				vo = new UserVo();
+				vo.setNo(rs.getInt(1));
+				vo.setName(rs.getString(2));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		close();
+		
+		return vo; 
+	}
+	
+	public UserVo getUserData(int no) {
+		UserVo vo = null;
+		try {
+			getConnection();
+
+			String query ="";
+			query += " select no,  ";
+			query += " 		  id, ";
+			query += " 		  password, ";
+			query += " 		  name, ";
+			query += " 		  gender ";
+			query += " from users ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no );    
+			
+			rs = pstmt.executeQuery();  
+			while(rs.next()) {
+				vo = new UserVo(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		close();
+		
+		return vo; 
+	}
+	
+	public void modify(UserVo vo) {
+		try {
+			getConnection();
+
+			String query ="";
+			query += " update users ";
+			query += " set password = ?, " ;
+			query += "	   name = ?, " ;
+			query += "	   gender = ? " ;
+			query += " where id = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, vo.getPassword() );    
+			pstmt.setString(2, vo.getName());
+			pstmt.setString(3, vo.getGender());
+			pstmt.setString(4, vo.getId());
+			
+			int count = pstmt.executeUpdate();  
+			System.out.println(count + " 건이 수정되었습니다.[UserDao]");
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		close();
+	}
+	
+	
 }
