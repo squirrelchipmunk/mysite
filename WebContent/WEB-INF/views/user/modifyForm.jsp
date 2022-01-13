@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.javaex.vo.UserVo" %>
 <%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
 	UserVo userData = (UserVo)request.getAttribute("userData");
 %>    
 <!DOCTYPE html>
@@ -18,43 +17,8 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="/mysite/main">MySite</a>
-			</h1>
-
-			<%
-				if(authUser != null){
-			%>
-					<ul>
-						<li> <%=authUser.getName()%>님 안녕하세요^^</li>
-						<li><a href="/mysite/user?action=logout" class="btn_s">로그아웃</a></li>
-						<li><a href="/mysite/user?action=modifyForm" class="btn_s">회원정보수정</a></li>
-					</ul>
-			<%		
-				}
-				else{
-			%>
-					<ul>
-						<li><a href="/mysite/user?action=loginForm" class="btn_s">로그인</a></li>
-						<li><a href="/mysite/user?action=joinForm" class="btn_s">회원가입</a></li>
-					</ul>
-			<%		
-				}
-			%>
-			
-		</div>
-		<!-- //header -->
-
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
-			</ul>
-		</div>
-		<!-- //nav -->
+		<!-- header + nav -->>
+		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 
 		<div id="container" class="clearfix">
 			<div id="aside">
@@ -86,34 +50,44 @@
 					<div id="modifyForm">
 						<form action="/mysite/user" method="get">
 							<input type="hidden" name="action" value="modify">
-							<input type="hidden" name="id" value="<%=userData.getId()%>">
+							<input type="hidden" name="id" value="${userData.id}">
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
-								<span class="text-large bold"><%=userData.getId() %></span>
+								<span class="text-large bold">${userData.id}</span>
 							</div>
 	
 							<!-- 비밀번호 -->
 							<div class="form-group">
 								<label class="form-text" for="input-pass">패스워드</label> 
-								<input type="text" id="input-pass" name="password" value="<%=userData.getPassword()%>" placeholder="비밀번호를 입력하세요"	>
+								<input type="text" id="input-pass" name="password" value="${userData.password}" placeholder="비밀번호를 입력하세요"	>
 							</div>
 	
 							<!-- 이메일 -->
 							<div class="form-group">
 								<label class="form-text" for="input-name">이름</label> 
-								<input type="text" id="input-name" name="name" value="<%=userData.getName() %>" placeholder="이름을 입력하세요">
+								<input type="text" id="input-name" name="name" value="${userData.name}" placeholder="이름을 입력하세요">
 							</div>
 	
 							<!-- //나이 -->
 							<div class="form-group">
 								<span class="form-text">성별</span> 
 								
-								<label for="rdo-male">남</label> 
-								<input type="radio" id="rdo-male" name="gender" value="male" checked> 
+								<c:choose>
+									<c:when test="${userData.gender == 'male' }">
+										<label for="rdo-male">남</label> 
+										<input type="radio" id="rdo-male" name="gender" value="male" checked> 
+										<label for="rdo-female">여</label> 
+										<input type="radio" id="rdo-female" name="gender" value="female">
+									</c:when>
+									<c:otherwise>
+										<label for="rdo-male">남</label> 
+										<input type="radio" id="rdo-male" name="gender" value="male"> 
+										<label for="rdo-female">여</label> 
+										<input type="radio" id="rdo-female" name="gender" value="female" checked>
+									</c:otherwise>
+								</c:choose>
 								
-								<label for="rdo-female">여</label> 
-								<input type="radio" id="rdo-female" name="gender" value="female">
 							</div>
 							<!-- 버튼영역 -->
 							<div class="button-area">
@@ -133,10 +107,8 @@
 		</div>
 		<!-- //container  -->
 
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
-		<!-- //footer -->
+		<!-- footer -->
+		<c:import url="/WEB-INF/views/include/footer.jsp"></c:import>
 		
 	</div>
 	<!-- //wrap -->

@@ -105,8 +105,7 @@ public class UserDao {
 			getConnection();
 
 			String query ="";
-			query += " select no,  ";
-			query += " 		  id, ";
+			query += " select id, ";
 			query += " 		  password, ";
 			query += " 		  name, ";
 			query += " 		  gender ";
@@ -118,7 +117,7 @@ public class UserDao {
 			
 			rs = pstmt.executeQuery();  
 			while(rs.next()) {
-				vo = new UserVo(rs.getInt(1), rs.getString(2),rs.getString(3),rs.getString(4),rs.getString(5));
+				vo = new UserVo(0, rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4));
 			}
 			
 		} catch (SQLException e) {
