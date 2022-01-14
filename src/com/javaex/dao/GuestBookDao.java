@@ -62,7 +62,7 @@ public class GuestBookDao {
 			pstmt.setString(3, vo.getContent());
 			
 			int count = pstmt.executeUpdate();  
-			System.out.println("["+count + " 건이 등록되었습니다.]");
+			System.out.println(count + " 건이 등록되었습니다.[guestbook]");
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
@@ -85,7 +85,7 @@ public class GuestBookDao {
 			
 			int count = pstmt.executeUpdate();
 			
-			System.out.println("["+count + " 건이 삭제되었습니다.]");
+			System.out.println(count + " 건이 삭제되었습니다.[guestbook]");
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
