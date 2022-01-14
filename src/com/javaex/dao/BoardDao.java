@@ -55,7 +55,7 @@ public class BoardDao {
 			query += " 	 	  title, ";
 			query += " 		  content, ";
 			query += " 		  hit, ";
-			query += " 		  to_char(reg_date, 'yyyy-mm-dd hh:mi') reg_date, ";
+			query += " 		  to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date, ";
 			query += " 		  u.no uno,";
 			query += " 		  name ";
 			query += " from users u, board  b";
@@ -106,7 +106,7 @@ public class BoardDao {
 			query += " 		  title, ";
 			query += " 		  content, ";
 			query += " 		  hit, ";
-			query += " 		  to_char(reg_date, 'yyyy-mm-dd hh:mi') reg_date, ";
+			query += " 		  to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date, ";
 			query += " 		  u.no uno,";
 			query += " 		  name ";
 			query += " from users u, board  b";
