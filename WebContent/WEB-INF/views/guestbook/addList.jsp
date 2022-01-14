@@ -18,8 +18,9 @@
 		<c:import url="/WEB-INF/views/include/header.jsp"></c:import>
 	
 		<div id="container" class="clearfix">
-			
+			<!-- aside(guestbook) -->
 			<c:import url="/WEB-INF/views/include/aside_guestbook.jsp"></c:import>
+			
 			<div id="content">
 				
 				<div id="content-head" class="clearfix">

@@ -18,6 +18,7 @@
 
 
 		<div id="container" class="clearfix">
+			<!-- aside(user) -->
 			<c:import url="/WEB-INF/views/include/aside_user.jsp"></c:import>
 
 			<div id="content">
