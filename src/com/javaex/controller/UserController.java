@@ -16,10 +16,9 @@ import com.javaex.vo.UserVo;
 @WebServlet("/user")
 public class UserController extends HttpServlet {
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		System.out.println(action);
+//		System.out.println(action);
 
 		if ("joinForm".equals(action)) {
 			WebUtil.forward(request, response, "WEB-INF/views/user/joinForm.jsp");

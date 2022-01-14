@@ -16,10 +16,7 @@ import com.javaex.util.WebUtil;
 public class MainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("/main");
 		WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp");
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
