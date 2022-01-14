@@ -21,6 +21,7 @@ public class BoardController extends HttpServlet {
 		String action = request.getParameter("action");
 //		System.out.println(action);
 		
+		//게시글 보기
 		if("read".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no")); // 게시글 번호
 			BoardVo postVo = new BoardDao().read(no, true);
@@ -29,17 +30,18 @@ public class BoardController extends HttpServlet {
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
 		}
 		
+		//게시글 삭제
 		else if("delete".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
 			new BoardDao().delete(no);
 			
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
-		
+		//게시글 삭제 화면
 		else if("writeForm".equals(action)) {
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		}
-		
+		//게시글쓰기
 		else if("write".equals(action)) {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
@@ -56,7 +58,7 @@ public class BoardController extends HttpServlet {
 			new BoardDao().write(postVo);
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
-		
+		//게시글 수정 화면
 		else if("modifyForm".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
 			BoardVo postVo = new BoardDao().read(no, false);
@@ -64,7 +66,7 @@ public class BoardController extends HttpServlet {
 			
 			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");
 		}
-		
+		//게시글 수정
 		else if("modify".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
@@ -78,7 +80,7 @@ public class BoardController extends HttpServlet {
 			new BoardDao().modify(modifyPostVo);
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
-		
+		//게시글 리스트
 		else {
 			List<BoardVo> postList = new BoardDao().getPostList();
 			

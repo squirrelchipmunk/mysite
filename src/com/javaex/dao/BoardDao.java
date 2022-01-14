@@ -79,7 +79,10 @@ public class BoardDao {
 			
 		return postList;
 	}
-
+	
+	// 게시글(vo) 가져오기
+	// isRead  --> 게시글 보기 vo
+	// !isRead --> 수정폼 기본값 vo
 	public BoardVo read(int no, boolean isRead) {
 		BoardVo postVo = null;
 		try {
@@ -87,6 +90,7 @@ public class BoardDao {
 
 			String query ="";
 			
+			// 게시글 보기 조회수 +1
 			if(isRead) {
 				query += " update board ";
 				query += " set hit = hit+1 ";
@@ -96,6 +100,7 @@ public class BoardDao {
 				pstmt.setInt(1, no);
 				pstmt.executeUpdate();
 			}
+			
 			query ="";
 			query += " select b.no bno, ";
 			query += " 		  title, ";
@@ -116,14 +121,14 @@ public class BoardDao {
 				int bno = rs.getInt("bno");
 				String title =  rs.getString("title");
 				String content = rs.getString("content");
-				if(isRead)
+				if(isRead) // 게시글 보기 html 공백, 개행 처리
 					content = content.replace(" ", "&nbsp;").replace("\n", "<br>");
 				int hit = rs.getInt("hit");
 				String regDate =  rs.getString("reg_date");
 				int uno = rs.getInt("uno");
 				String writer = rs.getString("name");
+				
 				postVo = new BoardVo( bno,title, content, hit, regDate, uno, writer);
-						
 			}
 
 		} catch (SQLException e) {
