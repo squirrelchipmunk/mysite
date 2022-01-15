@@ -83,7 +83,7 @@ public class BoardDao {
 	// 게시글(vo) 가져오기
 	// isRead  --> 게시글 보기 vo
 	// !isRead --> 수정폼 기본값 vo
-	public BoardVo read(int no, boolean isRead) {
+	public BoardVo getPost(int no, boolean isRead) {
 		BoardVo postVo = null;
 		try {
 			getConnection();
