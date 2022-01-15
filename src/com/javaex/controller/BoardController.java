@@ -37,11 +37,13 @@ public class BoardController extends HttpServlet {
 			
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
+		
 		//게시글 삭제 화면
 		else if("writeForm".equals(action)) {
 			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
 		}
-		//게시글쓰기
+		
+		//게시글 쓰기
 		else if("write".equals(action)) {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
@@ -56,30 +58,35 @@ public class BoardController extends HttpServlet {
 			postVo.setContent(content);
 			
 			new BoardDao().write(postVo);
+			
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
+		
 		//게시글 수정 화면
 		else if("modifyForm".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
 			BoardVo postVo = new BoardDao().getPost(no, false);
-			request.setAttribute("post", postVo);
 			
+			request.setAttribute("post", postVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");
 		}
+		
 		//게시글 수정
 		else if("modify".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			
-			BoardVo modifyPostVo = new BoardVo();
-			modifyPostVo.setNo(no);
-			modifyPostVo.setTitle(title);
-			modifyPostVo.setContent(content);
+			BoardVo postVo = new BoardVo();
+			postVo.setNo(no);
+			postVo.setTitle(title);
+			postVo.setContent(content);
 			
-			new BoardDao().modify(modifyPostVo);
+			new BoardDao().modify(postVo);
+			
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
+		
 		//게시글 리스트
 		else {
 			List<BoardVo> postList = new BoardDao().getPostList();

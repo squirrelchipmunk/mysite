@@ -51,14 +51,14 @@ public class BoardDao {
 			getConnection();
 
 			String query ="";
-			query += " select b.no pno, ";
+			query += " select b.no bno, ";
 			query += " 	 	  title, ";
 			query += " 		  content, ";
 			query += " 		  hit, ";
 			query += " 		  to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date, ";
 			query += " 		  u.no uno,";
 			query += " 		  name ";
-			query += " from users u, board  b";
+			query += " from users u, board b";
 			query += " where u.no = b.user_no ";
 			query += " order by reg_date desc ";
 			
@@ -66,11 +66,18 @@ public class BoardDao {
 			rs = pstmt.executeQuery();  
 			
 			while(rs.next()) { //			  
-				BoardVo postVo = new BoardVo( rs.getInt("pno"), rs.getString("title"), rs.getString("content"),
-						rs.getInt("hit"), rs.getString("reg_date"), rs.getInt("uno"), rs.getString("name"));
+				BoardVo postVo = new BoardVo( 
+									rs.getInt("bno"), 
+									rs.getString("title"), 
+									rs.getString("content"),
+									rs.getInt("hit"), 
+									rs.getString("reg_date"), 
+									rs.getInt("uno"), 
+									rs.getString("name")
+								);
+				
 				postList.add(postVo);
 			}
-
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
@@ -87,7 +94,6 @@ public class BoardDao {
 		BoardVo postVo = null;
 		try {
 			getConnection();
-
 			String query ="";
 			
 			// 게시글 보기 조회수 +1
@@ -118,17 +124,18 @@ public class BoardDao {
 			rs = pstmt.executeQuery();  
 			
 			while(rs.next()) { //
-				int bno = rs.getInt("bno");
-				String title =  rs.getString("title");
-				String content = rs.getString("content");
+				int bno 		= rs.getInt("bno");
+				String title 	= rs.getString("title");
+				String content 	= rs.getString("content");
+				int hit 		= rs.getInt("hit");
+				String regDate 	= rs.getString("reg_date");
+				int uno 		= rs.getInt("uno");
+				String writer 	= rs.getString("name");
+				
 				if(isRead) // 게시글 보기 html 공백, 개행 처리
 					content = content.replace(" ", "&nbsp;").replace("\n", "<br>");
-				int hit = rs.getInt("hit");
-				String regDate =  rs.getString("reg_date");
-				int uno = rs.getInt("uno");
-				String writer = rs.getString("name");
 				
-				postVo = new BoardVo( bno,title, content, hit, regDate, uno, writer);
+				postVo = new BoardVo( bno, title, content, hit, regDate, uno, writer);
 			}
 
 		} catch (SQLException e) {
@@ -136,7 +143,6 @@ public class BoardDao {
 		} 
 		
 		close();
-		
 		return postVo;
 	}
 
@@ -182,7 +188,6 @@ public class BoardDao {
 		} 
 		
 		close();
-		
 	}
 
 	public void modify(BoardVo vo) {
@@ -208,4 +213,5 @@ public class BoardDao {
 		
 		close();
 	}
+	
 }
