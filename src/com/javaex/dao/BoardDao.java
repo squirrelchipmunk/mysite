@@ -86,6 +86,26 @@ public class BoardDao {
 		return postList;
 	}
 	
+	private void incHit(int no) {
+		try {
+			getConnection();
+			String query ="";
+			
+			query += " update board ";
+			query += " set hit = hit+1 ";
+			query += " where no = ? ";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, no);
+			pstmt.executeUpdate();
+
+
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+	}
+	
+	
 	// 게시글(vo) 가져오기
 	// isRead  --> 게시글 보기 vo
 	// !isRead --> 수정폼 기본값 vo
@@ -96,15 +116,8 @@ public class BoardDao {
 			String query ="";
 			
 			// 게시글 보기 조회수 +1
-			if(isRead) {
-				query += " update board ";
-				query += " set hit = hit+1 ";
-				query += " where no = ? ";
-
-				pstmt = conn.prepareStatement(query);
-				pstmt.setInt(1, no);
-				pstmt.executeUpdate();
-			}
+			if(isRead)
+				incHit(no);
 			
 			query ="";
 			query += " select b.no bno, ";
