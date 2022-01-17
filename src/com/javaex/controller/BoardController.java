@@ -25,7 +25,9 @@ public class BoardController extends HttpServlet {
 		if("read".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no")); // 게시글 번호
 			new BoardDao().incHit(no);
-			BoardVo postVo = new BoardDao().getPost(no, true);
+			BoardVo postVo = new BoardDao().getPost(no);
+			postVo.setTitle(postVo.getTitle().replace(" ","&nbsp;"));
+			postVo.setContent(postVo.getContent().replace(" ", "&nbsp;").replace("\n", "<br>"));
 			
 			request.setAttribute("post", postVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
@@ -66,7 +68,7 @@ public class BoardController extends HttpServlet {
 		//게시글 수정 화면
 		else if("modifyForm".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no"));
-			BoardVo postVo = new BoardDao().getPost(no, false);
+			BoardVo postVo = new BoardDao().getPost(no);
 			
 			request.setAttribute("post", postVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/modifyForm.jsp");

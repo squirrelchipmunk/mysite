@@ -106,9 +106,7 @@ public class BoardDao {
 		close();
 	}
 	
-	// isRead  --> 게시글 보기 vo
-	// !isRead --> 수정폼 기본값 vo
-	public BoardVo getPost(int no, boolean isRead) {
+	public BoardVo getPost(int no) {
 		BoardVo postVo = null;
 		try {
 			getConnection();
@@ -138,9 +136,6 @@ public class BoardDao {
 				String regDate 	= rs.getString("reg_date");
 				int uno 		= rs.getInt("uno");
 				String writer 	= rs.getString("name");
-				
-				if(isRead) // 게시글 보기 html 공백, 개행 처리
-					content = content.replace(" ", "&nbsp;").replace("\n", "<br>");
 				
 				postVo = new BoardVo( bno, title, content, hit, regDate, uno, writer);
 			}
