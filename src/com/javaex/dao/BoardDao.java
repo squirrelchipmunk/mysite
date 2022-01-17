@@ -88,7 +88,6 @@ public class BoardDao {
 	
 	private void incHit(int no) {
 		try {
-			getConnection();
 			String query ="";
 			
 			query += " update board ";
@@ -98,7 +97,6 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
 			pstmt.executeUpdate();
-
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
