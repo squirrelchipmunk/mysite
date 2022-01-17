@@ -53,7 +53,6 @@ public class BoardDao {
 			String query ="";
 			query += " select b.no bno, ";
 			query += " 	 	  title, ";
-			query += " 		  content, ";
 			query += " 		  hit, ";
 			query += " 		  to_char(reg_date, 'yy-mm-dd hh24:mi') reg_date, ";
 			query += " 		  u.no uno,";
@@ -69,7 +68,7 @@ public class BoardDao {
 				BoardVo postVo = new BoardVo( 
 									rs.getInt("bno"), 
 									rs.getString("title"), 
-									rs.getString("content"),
+									"",
 									rs.getInt("hit"), 
 									rs.getString("reg_date"), 
 									rs.getInt("uno"), 
