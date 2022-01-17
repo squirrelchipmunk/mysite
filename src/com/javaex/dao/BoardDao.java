@@ -67,7 +67,7 @@ public class BoardDao {
 			while(rs.next()) { //			  
 				BoardVo postVo = new BoardVo( 
 									rs.getInt("bno"), 
-									rs.getString("title"), 
+									rs.getString("title").replace(" ", "&nbsp;"), 
 									"",
 									rs.getInt("hit"), 
 									rs.getString("reg_date"), 
