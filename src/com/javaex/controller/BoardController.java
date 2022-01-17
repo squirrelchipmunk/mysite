@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.javaex.util.WebUtil;
 import com.javaex.dao.BoardDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.BoardVo;
 import com.javaex.vo.UserVo;
 
@@ -39,9 +39,18 @@ public class BoardController extends HttpServlet {
 			WebUtil.redirect(request, response, "/mysite/board");
 		}
 		
-		//게시글 삭제 화면
+		//게시글 쓰기 화면
 		else if("writeForm".equals(action)) {
-			WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo)session.getAttribute("authUser");
+			
+			if(authUser != null) {
+				WebUtil.forward(request, response, "/WEB-INF/views/board/writeForm.jsp");
+			}
+			else { // 잘못된 접근 처리
+				WebUtil.redirect(request, response, "/mysite/main");
+			}
+				
 		}
 		
 		//게시글 쓰기
