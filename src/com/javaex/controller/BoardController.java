@@ -24,6 +24,7 @@ public class BoardController extends HttpServlet {
 		//게시글 보기
 		if("read".equals(action)) {
 			int no = Integer.parseInt(request.getParameter("no")); // 게시글 번호
+			new BoardDao().incHit(no);
 			BoardVo postVo = new BoardDao().getPost(no, true);
 			
 			request.setAttribute("post", postVo);

@@ -86,8 +86,9 @@ public class BoardDao {
 		return postList;
 	}
 	
-	private void incHit(int no) {
+	public void incHit(int no) {
 		try {
+			getConnection();
 			String query ="";
 			
 			query += " update board ";
@@ -101,10 +102,10 @@ public class BoardDao {
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		} 
+		
+		close();
 	}
 	
-	
-	// 게시글(vo) 가져오기
 	// isRead  --> 게시글 보기 vo
 	// !isRead --> 수정폼 기본값 vo
 	public BoardVo getPost(int no, boolean isRead) {
@@ -112,10 +113,6 @@ public class BoardDao {
 		try {
 			getConnection();
 			String query ="";
-			
-			// 게시글 보기 조회수 +1
-			if(isRead)
-				incHit(no);
 			
 			query ="";
 			query += " select b.no bno, ";
