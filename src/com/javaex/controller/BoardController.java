@@ -26,8 +26,6 @@ public class BoardController extends HttpServlet {
 			int no = Integer.parseInt(request.getParameter("no")); // 게시글 번호
 			new BoardDao().incHit(no);
 			BoardVo postVo = new BoardDao().getPost(no);
-			postVo.setTitle(postVo.getTitle().replace(" ","&nbsp;"));
-			postVo.setContent(postVo.getContent().replace(" ", "&nbsp;").replace("\n", "<br>"));
 			
 			request.setAttribute("post", postVo);
 			WebUtil.forward(request, response, "/WEB-INF/views/board/read.jsp");
